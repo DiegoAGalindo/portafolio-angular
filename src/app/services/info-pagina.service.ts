@@ -1,38 +1,49 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { InfoPagina } from '../interfaces/info-pagina.interface';
-import { Equipo } from '../interfaces/equipo-pagina.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InfoPaginaService {
 
-  info : InfoPagina = {};
-  cargada =false;
-  equipo : Equipo[] = [];
+  info: InfoPagina = {};
+  cargada = false;
 
-  constructor(private http:HttpClient) {
+  equipo: any[] = [];
+
+  constructor( private http: HttpClient ) {
+
     this.cargarInfo();
     this.cargarEquipo();
-   }
 
-   private cargarInfo(){
+  }
+
+  private cargarInfo() {
+    // Leer el archivo JSON
     this.http.get('assets/data/data-pagina.json')
-    .subscribe( (resp:InfoPagina) =>{
+    .subscribe( (resp: InfoPagina) => {
       this.cargada = true;
       this.info = resp;
     });
-   }
+  }
 
-   private cargarEquipo()
-   {
+
+  private cargarEquipo() {
+
+    // Leer el archivo JSON
     this.http.get('https://angular-portafolio-23938-default-rtdb.firebaseio.com/equipo.json')
-    .subscribe( (resp: any) =>{
-      this.equipo = resp;
-      //console.log( resp );
-    });
-   }
+    .subscribe( (resp: any) => {
 
+      this.equipo = resp;
+      // console.log(resp);
+    });
+
+
+    // this.equipo = resp
+  }
 
 }
+
+
+
